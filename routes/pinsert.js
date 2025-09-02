@@ -4,24 +4,44 @@ const productModel = require('../model/prodmodel');
 
 router.post('/proins', async (req, res) => {
     const { coachid, pribat, backbat, pripow, maintainance, lat, lng, sig } = req.body;
-    try {
-        
 
+    try {
         if (!coachid) {
             return res.status(400).json({ error: "coachid is required" });
         }
 
-        const updatedProduct = await productModel.findOne({coachid:coachid})
-        // const updatedProduct = await productModel.findOneAndUpdate(
-        //     { coachid },             // filter by coachid
-        //     { pribat, backbat, pripow, maintainance, lat, lng, sig }, // data to update
-        //     { new: true, upsert: true } // create if not exists, return updated document
-        // );
+        // Check if product exists
+        let product = await productModel.findOne({ coachid });
 
-        res.status(200).send(updatedProduct)
-    }
-        catch (err) {
-        console.error(err);
+        if (!product) {
+            // Insert new product
+            product = await productModel.create({
+                coachid,
+                pribat,
+                backbat,
+                pripow,
+                maintainance,
+                lat,
+                lng,
+                sig
+            });
+            return res.status(201).json({ message: "New product inserted", product });
+        } else {
+            // Update existing product
+            product.pribat = pribat;
+            product.backbat = backbat;
+            product.pripow = pripow;
+            product.maintainance = maintainance;
+            product.lat = lat;
+            product.lng = lng;
+            product.sig = sig;
+
+            const updatedProduct = await product.save();
+            return res.status(200).json({ message: "Product updated", product: updatedProduct });
+        }
+
+    } catch (err) {
+        console.error("Error in /proins:", err);
         res.status(500).json({ error: "Internal Server Error" });
     }
 });
