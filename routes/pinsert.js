@@ -3,8 +3,10 @@ const router = express.Router();
 const productModel = require('../model/prodmodel'); 
 
 router.post('/proins', async (req, res) => {
+    const { coachid, pribat, backbat, pripow, maintainance, lat, lng, sig } = req.body;
+    res.send(req.body)
     try {
-        const { coachid, pribat, backbat, pripow, maintainance, lat, lng, sig } = req.body;
+        
 
         if (!coachid) {
             return res.status(400).json({ error: "coachid is required" });
