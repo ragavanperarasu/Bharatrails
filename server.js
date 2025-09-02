@@ -4,6 +4,7 @@ require("dotenv").config();
 
 const home = require('./routes/home')
 const pinsert = require('./routes/pinsert')
+const getdata = require('./routes/getdata')
 
 const app = express();
 
@@ -14,6 +15,7 @@ app.use(express.json());
 
 app.use('/',home)
 app.use('/',pinsert)
+app.use('/',getdata)
 
 
 const PORT = process.env.PORT || 3000;
