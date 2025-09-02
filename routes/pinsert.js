@@ -9,12 +9,11 @@ router.post('/proins', async (req, res) => {
         if (!coachid) {
             return res.status(400).json({ error: "coachid is required" });
         }
-
-        // Check if product exists
+        
         let product = await productModel.findOne({ coachid });
 
         if (!product) {
-            // Insert new product
+         
             product = await productModel.create({
                 coachid,
                 pribat,
@@ -27,7 +26,7 @@ router.post('/proins', async (req, res) => {
             });
             return res.status(201).json({ message: "New product inserted", product });
         } else {
-            // Update existing product
+          
             product.pribat = pribat;
             product.backbat = backbat;
             product.pripow = pripow;
@@ -37,7 +36,7 @@ router.post('/proins', async (req, res) => {
             product.sig = sig;
 
             const updatedProduct = await product.save();
-            return res.status(200).json({ message: "Product updated", product: updatedProduct });
+            return res.status(200).send("done");
         }
 
     } catch (err) {
