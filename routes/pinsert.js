@@ -1,11 +1,27 @@
-const express = require('express')
-const router = express.Router()
+const express = require('express');
+const router = express.Router();
 const productModel = require('../model/prodmodel'); 
 
-router.post('/proins', async (req, res, next) => {
-    console.log(req.body)
- res.send("successfull");
+router.post('/proins', async (req, res) => {
+    try {
+        const { coachid, pribat, backbat, pripow, maintainance, lat, lng, sig } = req.body;
+
+        if (!coachid) {
+            return res.status(400).json({ error: "coachid is required" });
+        }
+
+        const updatedProduct = await productModel.findOneAndUpdate(
+            { coachid },             // filter by coachid
+            { pribat, backbat, pripow, maintainance, lat, lng, sig }, // data to update
+            { new: true, upsert: true } // create if not exists, return updated document
+        );
+
+        res.status(200).send("done")
+    }
+        catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
 });
 
-
-module.exports = router
+module.exports = router;
