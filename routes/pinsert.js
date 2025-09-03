@@ -6,7 +6,7 @@ router.post('/proins', async (req, res) => {
     const { coachid, pribat, backbat, pripow, maintainance, lat, lng, sig } = req.body;
 
     try {
-        if (!coachid) {
+        if (!coachid || !pribat) {
             return res.status(400).json({ error: "coachid is required" });
         }
         
