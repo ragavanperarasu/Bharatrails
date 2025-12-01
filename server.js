@@ -1,6 +1,7 @@
 const express = require("express");
 const http = require("http");
 const { Server } = require("socket.io");
+require("./mqttServer");
 const cors = require("cors");
 require("dotenv").config();
 
