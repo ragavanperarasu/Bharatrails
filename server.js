@@ -7,6 +7,7 @@ require("dotenv").config();
 
 const home = require('./routes/home');
 const pinsert = require('./routes/pinsert');
+const getcoach = require('./routes/getcoach');
 
 // Socket event file
 const socketHandler = require('./routes/getdata'); 
@@ -18,7 +19,7 @@ app.use(express.json());
 // Normal REST routes
 app.use('/', home);
 app.use('/', pinsert);
-
+app.use('/', getcoach);
 // Create HTTP server from Express app
 const server = http.createServer(app);
 

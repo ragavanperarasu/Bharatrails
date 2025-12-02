@@ -1,4 +1,4 @@
-const productModel = require('../model/prodmodel');
+const productModel = require("../model/prodmodel");
 
 module.exports = (io) => {
   io.on("connection", (socket) => {
@@ -6,7 +6,18 @@ module.exports = (io) => {
 
     const sendData = async () => {
       try {
-        const products = await productModel.find({});
+        const products = await productModel.aggregate([
+          { $sort: { createdAt: -1 } },
+          {
+            $group: {
+              _id: "$coachid",
+              doc: { $first: "$$ROOT" },
+            },
+          },
+          { $replaceRoot: { newRoot: "$doc" } },
+          { $sort: { createdAt: -1 } },
+        ]);
+
         socket.emit("productData", products);
       } catch (err) {
         socket.emit("error", { message: "Error fetching data" });
