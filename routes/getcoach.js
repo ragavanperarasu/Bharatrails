@@ -8,7 +8,7 @@ router.get("/coach/:id", async (req, res, next) => {
   if(!product){
     return res.send("Coach not found");
   }
-  console.log(product);
+  //console.log(product);
   res.send(product);
 });
 
