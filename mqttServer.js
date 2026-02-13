@@ -119,6 +119,8 @@ aedes.on("publish", async (packet, client) => {
         maintainance,
         lat: lat,
         lng: lng,
+        mlat: mlat,
+        mlng: mlon,
         sig
       });
       // console.log("inserted : ", d)
