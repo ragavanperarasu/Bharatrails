@@ -88,6 +88,7 @@ aedes.on("publish", async (packet, client) => {
       });
 
       //console.log("✅ Stored train/data");
+      // mosquitto_pub -h southernrailway.gctcpsc.in -p 1883 -t train/data -m '{"coachid":"TEST","pribat":"100","backbat":"90","pripow":true,"maintainance":false,"lat":"16.5062","lng":"80.6480","sig":"-70"}'
 
     }
 
